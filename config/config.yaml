@@ -1,0 +1,46 @@
+# =============================================================================
+# config.yaml for SRA -> salmon + STAR workflow
+# version: 3
+# date:    2026-10-25
+# =============================================================================
+
+samples: "config/samples.tsv"
+
+# scratch for fasterq-dump and STAR temp files; point at fast scratch space
+tmpdir: "tmp"
+
+# run network steps (GENCODE download, prefetch) on the host running snakemake
+local_downloads: true
+
+# keep decompressed-from-SRA FASTQs after salmon + STAR finish
+keep_fastq: false
+
+gencode:
+  release: 50
+  base_url: "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human"
+
+tools:
+  # salmon 2.8.0 binary
+  salmon: "/proj/milovelab/envs/salmon/bin/salmon"
+  # the rest come from modules:
+  #   module load python star sratoolkit samtools pigz multiqc
+  STAR: "STAR"
+  prefetch: "prefetch"
+  fasterq_dump: "fasterq-dump"
+  samtools: "samtools"
+  pigz: "pigz"
+  multiqc: "multiqc"
+
+sra:
+  max_size: "200G"
+
+salmon:
+  # --gencode trims |-delimited header metadata (salmon 1.x flag; confirm on 2.x)
+  index_extra: "--gencode"
+  libtype: "A"
+  quant_extra: "--gcBias --numGibbsSamples 30"
+
+star:
+  sjdb_overhang: 149              # read length - 1 (2x150 NovaSeq X)
+  limit_bam_sort_ram: 30000000000
+  extra: ""

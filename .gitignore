@@ -1,0 +1,12 @@
+# downloaded data and references
+ref/
+sra/
+fastq/
+tmp/
+# generated results
+salmon/
+star/
+multiqc/
+logs/
+# snakemake bookkeeping
+.snakemake/

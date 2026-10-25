@@ -1,0 +1,14 @@
+# Snakemake SLURM profile
+# version: 1
+# date:    2026-10-25
+executor: slurm
+jobs: 50
+latency-wait: 60
+retries: 1
+rerun-incomplete: true
+keep-going: true
+printshellcmds: true
+default-resources:
+  slurm_partition: "general"
+  mem_mb: 4000
+  runtime: 60
